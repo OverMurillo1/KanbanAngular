@@ -19,12 +19,14 @@ export class ApiService {
    // api with many task
    private apiRoot: string = 'https://run.mocky.io/v3/0933ddef-c9bf-4f26-8ddf-77990fb490cb';
 
+   //private apiRoot: string = 'list.json'
+
 
   constructor(private http: HttpClient) { }
 
   getApi(){
     return this.http
-      .get<Array<{}>>(this.apiRoot)
+      .get<Array<[]>>(this.apiRoot)
       .pipe( map(data => data), catchError(this.handleError));
   }
 
