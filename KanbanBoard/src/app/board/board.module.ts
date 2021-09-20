@@ -6,7 +6,10 @@ import { BoardComponent } from './board/board.component';
 import { ListComponent } from './components/list/list.component';
 import { TaskComponent } from './components/task/task.component';
 
-import { MaterialCdkModule} from './../material-cdk/material-cdk.module'
+import { MaterialCdkModule } from './../material-cdk/material-cdk.module';
+import { CreateTaskComponent } from './components/create-task/create-task.component';
+
+import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 
 @NgModule({
@@ -14,11 +17,14 @@ import { MaterialCdkModule} from './../material-cdk/material-cdk.module'
     BoardComponent,
     ListComponent,
     TaskComponent,
+    CreateTaskComponent,
   ],
   imports: [
     CommonModule,
     BoardRoutingModule,
-    MaterialCdkModule
+    MaterialCdkModule,
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class BoardModule { }

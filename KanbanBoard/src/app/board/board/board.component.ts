@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from './../../core/services/api.service';
 import { ListSchema } from './../../core/services/models/listshema';
+import { CdkConnectedOverlay } from '@angular/cdk/overlay';
 
 @Component({
   selector: 'app-board',
@@ -21,8 +22,30 @@ export class BoardComponent implements OnInit {
 
   getDataList(): void{
     this.apiService.getApi().subscribe(
-      (response: any) => this.lists = response['lists'],
+      (response: any) => this.lists = response['list'],
       error => console.error('Ups, ha ocurrido un error', error)
     );
   }
+
+  isOverlayDisplayed = false;
+  readonly overlayOptions: Partial<CdkConnectedOverlay> = {
+    hasBackdrop: true,
+    positions: [
+      {
+        originX: 'start',
+        originY: 'top',
+        overlayX: 'start',
+        overlayY: 'top'
+      }
+    ]
+  };
+
+  displayOverlay(): void{
+    this.isOverlayDisplayed = true;
+  }
+
+  hideOverlay(): void{
+    this.isOverlayDisplayed = false;
+  }
+
 }
