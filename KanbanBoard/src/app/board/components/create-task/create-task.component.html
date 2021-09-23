@@ -1,5 +1,6 @@
 <form class="form" [formGroup]="createTask" (ngSubmit)="onFormAdd(createTask.value)" novalidate>
   <header class="form__header">
+    <h3 class="form__header__title">{{ formText }} Tarea</h3>
     <button class="form__header__close-button" mat-raised-button (click)="close()">
       <mat-icon aria-hidden="false" aria-label="close icon">close</mat-icon>
     </button>
@@ -37,6 +38,6 @@
       </mat-error>
     </mat-form-field>
 
-    <button class="form__fields__button" mat-raised-button color="primary" [disabled]="!createTask.valid">Crear</button>
+    <button class="form__fields__button" mat-raised-button color="primary" [disabled]="!createTask.valid">{{formText}}</button>
   </section>
 </form>

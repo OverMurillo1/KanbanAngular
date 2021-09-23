@@ -3,6 +3,7 @@ import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { Component, Input, NgZone, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { take } from 'rxjs/operators';
+import { TaskSchema } from 'src/app/core/services/models';
 
 type DropdownObject = {
   value: string;
@@ -29,12 +30,21 @@ export class CreateTaskComponent implements OnInit {
 
   @ViewChild('autosize') autosize: CdkTextareaAutosize;
   @Input() connectedOverlay: CdkConnectedOverlay;
+  @Input() task: TaskSchema;
+  formText: string;
 
   constructor( private fb: FormBuilder, private _ngZone: NgZone) { }
 
   ngOnInit(): void {
     this.setForm();
     this.selectedPriority = '';
+    if (this.task && this.task.id.length > 0) {
+      this.setValuesOnForm(this.task);
+      this.formText = 'Editar';
+      this.selectedPriority = this.task.priority;
+    }else{
+      this.formText = 'Crear';
+    }
   }
 
   setForm(): void{
@@ -45,9 +55,13 @@ export class CreateTaskComponent implements OnInit {
     });
   }
 
-  onFormAdd( form: any ): void{
+  onFormAdd( form: TaskSchema ): void{
     if( this.createTask.valid ){
       console.log('Valido');
+      this.close();
+    }else{
+      console.log('Editado');
+      this.close();
     }
   }
 
@@ -55,6 +69,14 @@ export class CreateTaskComponent implements OnInit {
     this._ngZone.onStable
       .pipe(take(1))
       .subscribe( () => this.autosize.resizeToFitContent(true));
+  }
+
+  setValuesOnForm(form: TaskSchema):void{
+    this.createTask.setValue({
+      date: new Date(form.date),
+      priority: form.priority,
+      description: form.description
+    });
   }
 
   close(): void {

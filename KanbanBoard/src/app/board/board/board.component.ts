@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ApiService } from './../../core/services/api.service';
 import { ListSchema } from './../../core/services/models/listshema';
 import { CdkConnectedOverlay } from '@angular/cdk/overlay';
+import { TaskSchema } from 'src/app/core/services/models';
 
 @Component({
   selector: 'app-board',
@@ -11,9 +12,18 @@ import { CdkConnectedOverlay } from '@angular/cdk/overlay';
 export class BoardComponent implements OnInit {
 
   lists: ListSchema[];
+  initialValue = {
+    id:'',
+    description: '',
+    date: '',
+    priority:'',
+  }
+
+  task: TaskSchema;
 
   constructor( private apiService: ApiService) { 
     this.lists = [];
+    this.task = this.initialValue;
   }
 
   ngOnInit(): void {
@@ -40,8 +50,18 @@ export class BoardComponent implements OnInit {
     ]
   };
 
-  displayOverlay(): void{
+  displayOverlay( event?: any): void{
     this.isOverlayDisplayed = true;
+    if (!!event) {
+      this.task = {
+        date: event.date,
+        id: event.id,
+        description: event.description,
+        priority: event.priority,
+      };
+    }else {
+      this.task = this.initialValue;
+    }
   }
 
   hideOverlay(): void{

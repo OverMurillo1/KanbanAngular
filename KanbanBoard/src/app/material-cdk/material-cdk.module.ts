@@ -10,7 +10,10 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { OverlayModule } from '@angular/cdk/overlay';
-import { TextFieldModule } from '@angular/cdk/text-field'
+import { TextFieldModule } from '@angular/cdk/text-field';
+import { MatDialogModule } from '@angular/material/dialog';
+import { PortalModule } from '@angular/cdk/portal';
+
 
 const components = [MatToolbarModule, 
                     MatIconModule, 
@@ -22,7 +25,9 @@ const components = [MatToolbarModule,
                     MatDatepickerModule,
                     MatNativeDateModule,
                     OverlayModule,
-                    TextFieldModule];
+                    TextFieldModule,
+                    MatDialogModule,
+                    PortalModule];
 
 
 @NgModule({
