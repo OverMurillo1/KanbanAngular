@@ -4,6 +4,6 @@
         <app-task *ngFor="let task of list.tasks" [task]="task" cdkDrag></app-task>
     </div>
     <div class="list__tasks">
-        <app-task *ngFor="let task of list.tasks" [task]="task" (editTask)="handleEdit(task)" dckDrag></app-task>
+        <app-task *ngFor="let task of list.tasks" [task]="task" (editTask)="handleEdit(task)" cdkDrag></app-task>
     </div>
 </div>

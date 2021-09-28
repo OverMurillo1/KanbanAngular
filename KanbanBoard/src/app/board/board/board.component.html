@@ -1,5 +1,5 @@
 <main class="board" cdkDropListGroup>
-    <button 
+    <button
     class="board__add"
     cdkOverlayOrigin
     (click)="displayOverlay()"
@@ -19,7 +19,7 @@
     [cdkConnectedOverlayPosition]="overlayOptions.positions"
     (backdropClick)="hideOverlay()"
     (detach)="hideOverlay()">
-        <app-create-task [connectedOverlay]="connectedOverlay"></app-create-task>
+        <app-create-task [connectedOverlay]="connectedOverlay" [task]="task"></app-create-task>
     </ng-template>
-    
+
 </main>

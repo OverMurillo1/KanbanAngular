@@ -4,12 +4,14 @@ import { Component, Input, NgZone, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { take } from 'rxjs/operators';
 import { TaskSchema } from 'src/app/core/services/models';
+import { ListSchema } from 'src/app/core/services/models';
+import { TaskService } from 'src/app/core/task.service';
+import { generateUniqueId } from 'src/app';
 
 type DropdownObject = {
   value: string;
   viewValue: string;
 };
-
 
 @Component({
   selector: 'app-create-task',
@@ -31,14 +33,15 @@ export class CreateTaskComponent implements OnInit {
   @ViewChild('autosize') autosize: CdkTextareaAutosize;
   @Input() connectedOverlay: CdkConnectedOverlay;
   @Input() task: TaskSchema;
+  @Input() listId?: string;
   formText: string;
 
-  constructor( private fb: FormBuilder, private _ngZone: NgZone) { }
+  constructor( private fb: FormBuilder, private _ngZone: NgZone, private tasksService: TaskService) { }
 
   ngOnInit(): void {
     this.setForm();
     this.selectedPriority = '';
-    if (this.task && this.task.id.length > 0) {
+    if (this.task && this.task.id && this.task.id.length > 0) {
       this.setValuesOnForm(this.task);
       this.formText = 'Editar';
       this.selectedPriority = this.task.priority;
@@ -56,9 +59,21 @@ export class CreateTaskComponent implements OnInit {
   }
 
   onFormAdd( form: TaskSchema ): void{
-    if( this.createTask.valid ){
+    if( this.createTask.valid && this.task && !this.task.id){
+      form.id = generateUniqueId();
+      this.tasksService.addTask(form);
       console.log('Valido');
       this.close();
+    }else if (this.task && this.listId){
+      const findPriority = this.priorities.find(
+        (element) => form.priority === element.value
+      );
+      form.id = this.task.id;
+      form.priority = !findPriority ? this.task.priority : form.priority;
+      form.date = new Date(form.date);
+      if (form.priority) {
+        this.tasksService.updateTask(form, this.listId);
+      }
     }else{
       console.log('Editado');
       this.close();

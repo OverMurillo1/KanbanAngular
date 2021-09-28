@@ -1,6 +1,8 @@
 import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { listeners } from 'process';
 import { ApiService } from 'src/app/core/services';
 import { ListSchema, TaskSchema } from 'src/app/core/services/models';
+import { TaskService } from 'src/app/core/task.service';
 
 @Component({
   selector: 'app-home',
@@ -11,25 +13,26 @@ export class HomeComponent implements OnInit {
 
   taskList: TaskSchema[];
 
-  constructor( private apisService: ApiService) { }
+  constructor( private apisService: ApiService, private taskService: TaskService) { }
 
   ngOnInit(): void {}
 
   getPrioritiesTask(priorityType: string): void {
-    this.apisService.getApi().subscribe(
-      (response: any) => {
-        const lists = response['list'];
-        let tasks: TaskSchema[] = [];
-        lists.map((element: ListSchema) => {
-          element.tasks.map((task) => {
-            if (task.priority === priorityType) {
-              tasks.push(task);
-            }
+    this.taskService.getBoardList$
+      .subscribe(
+        (response: ListSchema[]) => {
+          const list = response;
+          let tasks: TaskSchema[]= [];
+          list.map( (element: ListSchema) => {
+            element.tasks.map( (task:TaskSchema) => {
+              if (task.priority == priorityType) {
+                tasks.push(task)
+              }
+            });
           });
-        });
-        this.taskList = tasks;
-      },
-      (error) => console.log('Ups! we have an error: ', error)
-    );
+          this.taskList = tasks;
+        },
+        (error: string) => (console.log('Eror ome', error))
+      );
   }
 }
