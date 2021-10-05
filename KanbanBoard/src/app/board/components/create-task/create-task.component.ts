@@ -6,7 +6,7 @@ import { take } from 'rxjs/operators';
 import { TaskSchema } from 'src/app/core/services/models';
 import { ListSchema } from 'src/app/core/services/models';
 import { TaskService } from 'src/app/core/task.service';
-import { generateUniqueId } from 'src/app';
+import { generateUniqueId } from 'src/app/core/services';
 
 type DropdownObject = {
   value: string;

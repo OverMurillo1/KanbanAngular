@@ -1,5 +1,4 @@
 import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { listeners } from 'process';
 import { ApiService } from 'src/app/core/services';
 import { ListSchema, TaskSchema } from 'src/app/core/services/models';
 import { TaskService } from 'src/app/core/task.service';
